@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lung Cancer Screening and Early Detection System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Header -->
+    <h1 class="text-center mb-4">Lung Cancer Screening and Early Detection System</h1>
+    
+    <!-- Patient Registration Form -->
+    <div class="card mb-4">
+      <div class="card-header">Patient Registration</div>
+      <div class="card-body">
+        <form id="patientRegistrationForm">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="patientName" class="form-label">Patient Name</label>
+              <input type="text" class="form-control" id="patientName" placeholder="Enter patient's name" required>
+            </div>
+            <div class="col">
+              <label for="age" class="form-label">Age</label>
+              <input type="number" class="form-control" id="age" placeholder="Enter age" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" id="gender" required>
+              <option selected disabled>Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="smokingHistory" class="form-label">Smoking History (years)</label>
+            <input type="number" class="form-control" id="smokingHistory" placeholder="Enter smoking history" required>
+          </div>
+          <div class="mb-3">
+            <label for="patientImage" class="form-label">Upload Image (e.g., Scan Image)</label>
+            <input type="file" class="form-control" id="patientImage" accept="image/*" required>
+          </div>
+          <button type="button" id="analyzeButton" class="btn btn-primary">Register and Analyze</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Screening Results Display -->
+    <div class="card">
+      <div class="card-header">Screening Results</div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Patient Name</th>
+              <th scope="col">Age</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Smoking History</th>
+              <th scope="col">Last Scan Result</th>
+              <th scope="col">Risk Assessment</th>
+            </tr>
+          </thead>
+          <tbody id="resultsTableBody">
+            <!-- Dynamic content will be injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('analyzeButton').addEventListener('click', function () {
+      const patientName = document.getElementById('patientName').value;
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const smokingHistory = document.getElementById('smokingHistory').value;
+      const patientImage = document.getElementById('patientImage').files[0];
+
+      if (patientName && age && gender && smokingHistory && patientImage) {
+        // Simulate analysis process
+        const isInfected = Math.random() > 0.5; // Randomly determines if the result is positive or negative
+        
+        const scanResult = isInfected ? 'Nodule Detected' : 'Normal';
+        const riskAssessment = isInfected ? 'High Risk' : 'Low Risk';
+        
+        // Append new data to the table
+        const resultsTableBody = document.getElementById('resultsTableBody');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <th scope="row">${resultsTableBody.children.length + 1}</th>
+          <td>${patientName}</td>
+          <td>${age}</td>
+          <td>${gender}</td>
+          <td>${smokingHistory} years</td>
+          <td>${scanResult}</td>
+          <td>${riskAssessment}</td>
+        `;
+        resultsTableBody.appendChild(newRow);
+
+        alert(`Analysis complete! Result: ${scanResult}, Risk: ${riskAssessment}`);
+      } else {
+        alert('Please fill out all fields and upload an image.');
+      }
+    });
+  </script>
+</body>
+</html>
